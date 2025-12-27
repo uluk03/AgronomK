@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3 class="mb-3">Доходы (обработка полей)</h3>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="post" class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label">Имя клиента</label>
+        <input type="text" name="name" class="form-control" required>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Гектары</label>
+        <input type="number" step="0.01" name="hectares" class="form-control" required>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Цена за гектар</label>
+        <input type="number" step="0.01" name="price" class="form-control" required>
+      </div>
+
+      <div class="col-12">
+        <button class="btn btn-success">Сохранить</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<table class="table table-bordered table-striped">
+  <thead class="table-success">
+    <tr>
+      <th>Имя</th>
+      <th>Гектары</th>
+      <th>Цена</th>
+      <th>Доход</th>
+      <th>Дата</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in incomes %}
+    <tr>
+      <td>{{ row.name }}</td>
+      <td>{{ row.hectares }}</td>
+      <td>{{ row.price }}</td>
+      <td><b>{{ row.income }}</b></td>
+      <td>{{ row.date }}</td>
+    </tr>
+    <td>
+      <form method="post" action="/income/delete/{{ row.id }}"
+            onsubmit="return confirm('Удалить запись?')">
+        <button class="btn btn-danger btn-sm">Удалить</button>
+      </form>
+    </td>
+    {% else %}
+    <tr>
+      <td colspan="5" class="text-center">Данных пока нет</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
+
+<th>Действия</th>

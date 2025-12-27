@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3 class="mb-4">Финансовый итог</h3>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="card text-bg-success mb-3">
+      <div class="card-body">
+        <h5>Доход</h5>
+        <h3>{{ income }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card text-bg-danger mb-3">
+      <div class="card-body">
+        <h5>Расход</h5>
+        <h3>{{ expense }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card text-bg-primary mb-3">
+      <div class="card-body">
+        <h5>Прибыль</h5>
+        <h3>{{ profit }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
