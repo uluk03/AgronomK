@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Админ панель</h2>
+
+<!-- 🔎 ПОИСК -->
+<form method="GET" class="mb-3">
+  <input type="text" name="search" class="form-control" placeholder="Поиск пользователя">
+  <button class="btn btn-primary mt-2">Найти</button>
+</form>
+
+<h4>Пользователи</h4>
+
+<table class="table table-bordered">
+  <tr>
+    <th>ID</th>
+    <th>Логин</th>
+    <th>Действие</th>
+  </tr>
+
+  {% for u in users %}
+  <tr>
+    <td>{{ u.id }}</td>
+    <td>{{ u.username }}</td>
+    <td>
+      <a href="/user/{{ u.id }}" class="btn btn-sm btn-info">
+        Карточка
+      </a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

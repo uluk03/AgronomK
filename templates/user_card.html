@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Пользователь: {{ user.username }}</h2>
+
+<div class="row mt-3">
+
+  <div class="col-md-4">
+    <div class="card text-bg-success p-3">
+      <h5>Доход</h5>
+      <h3>{{ total_income }}</h3>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card text-bg-danger p-3">
+      <h5>Расход</h5>
+      <h3>{{ total_expense }}</h3>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card text-bg-primary p-3">
+      <h5>Прибыль</h5>
+      <h3>{{ profit }}</h3>
+    </div>
+  </div>
+
+</div>
+
+<hr>
+
+<h4>Доходы</h4>
+<ul>
+  {% for i in incomes %}
+    <li>{{ i.name }} | {{ i.income }} | {{ i.date }}</li>
+  {% endfor %}
+</ul>
+
+<h4>Расходы</h4>
+<ul>
+  {% for e in expenses %}
+    <li>{{ e.category }} | {{ e.amount }} | {{ e.date }}</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

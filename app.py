@@ -196,6 +196,47 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html')
+
+#------------------------admin--------------
+@app.route('/admin')
+@login_required
+def admin_panel():
+    if current_user.role != "admin":
+        return "Доступ запрещён", 403
+
+    search = request.args.get('search')
+
+    if search:
+        users = User.query.filter(User.username.contains(search)).all()
+    else:
+        users = User.query.all()
+
+    return render_template("admin.html", users=users)
+#------------------карточка-------------------
+@app.route('/user/<int:user_id>')
+@login_required
+def user_card(user_id):
+    if current_user.role != "admin":
+        return "Доступ запрещён", 403
+
+    user = User.query.get_or_404(user_id)
+
+    incomes = Income.query.filter_by(user_id=user.id).all()
+    expenses = Expense.query.filter_by(user_id=user.id).all()
+
+    total_income = sum(i.income for i in incomes)
+    total_expense = sum(e.amount for e in expenses)
+    profit = total_income - total_expense
+
+    return render_template(
+        "user_card.html",
+        user=user,
+        incomes=incomes,
+        expenses=expenses,
+        total_income=total_income,
+        total_expense=total_expense,
+        profit=profit
+    )
  #-----------------------------login--------------
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -207,7 +248,7 @@ def login():
         user = User.query.filter_by(username=username).first()
 
         if user and check_password_hash(user.password, password):
-            login_user(user)
+            login_user(user, remember=True)
             return redirect(url_for('income'))
 
         return "Неверный логин или пароль"
